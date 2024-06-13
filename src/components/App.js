@@ -10,7 +10,6 @@ import Progress from './Progress';
 import FinishScreen from './FinishScreen';
 import Footer from './Footer';
 import Timer from './Timer';
-
 const SECS_FOR_QUESTION=30;
 const initialState = {
   questions: [],
@@ -56,7 +55,9 @@ function reducer(state, action) {
       return{...initialState,questions:state.questions,status:"ready"};
       case "tick":
         return {...state,secondsRemaining:state.secondsRemaining-1,
-        status:state.secondsRemaining==0?"finished":state.status}
+        status:state.secondsRemaining==0?"finished":state.status,
+        highscore:state.points > state.highscore ? state.points : state.highscore
+      }
     default:
       throw new Error('Unknown action type');
   }
@@ -104,8 +105,6 @@ export default function App() {
       )}
 
       {status==='finished' && <FinishScreen points={points} maxPossiblePoints={maxPossiblePoints} highestscore={highestscore} dispatch={dispatch}/>}
-
-
       </Maini>
     </div>
   );
